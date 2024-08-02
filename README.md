@@ -1,3 +1,9 @@
+# Getting Started with the website
+
+Website name is https://peppy-brioche-2008b7.netlify.app/
+
+If you got any feedback please mail me at datmmawarrior@gmail.com 
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
