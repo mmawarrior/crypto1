@@ -71,7 +71,7 @@ const SideSection: React.FC = () => {
       <ImageColumn>
         <img
           src="/img/bg2.png"
-          alt="Background Image"
+          alt="Background"
           style={{
             maxWidth: '80%', // Max width for centering
             height: 'auto',
@@ -88,19 +88,19 @@ const SideSection: React.FC = () => {
         </SideSectionContent>
         <IconContainer>
           <IconWrapper>
-            <Icon src="/img/coin1.png" alt="Payment Options" />
+            <Icon src="/img/coin1.png" alt="Payment" />
             <IconText>Payment Options<br />You can use crypto to buy regular goods and services.</IconText>
           </IconWrapper>
           <IconWrapper>
-            <Icon src="/img/coin1.png" alt="24/7 Support" />
+            <Icon src="/img/coin1.png" alt="Support" />
             <IconText>24/7 Support<br />You can use crypto to buy regular goods and services.</IconText>
           </IconWrapper>
           <IconWrapper>
-            <Icon src="/img/coin1.png" alt="Reliable Platform" />
+            <Icon src="/img/coin1.png" alt="Platform" />
             <IconText>Reliable Platform<br />You can use crypto to buy regular goods and services.</IconText>
           </IconWrapper>
           <IconWrapper>
-            <Icon src="/img/coin1.png" alt="Safe & Secure" />
+            <Icon src="/img/coin1.png" alt="Secure" />
             <IconText>Safe & Secure<br />You can use crypto to buy regular goods and services.</IconText>
           </IconWrapper>
         </IconContainer>

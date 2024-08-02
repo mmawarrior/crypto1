@@ -79,33 +79,6 @@ const Content: React.FC<{ menuOpen: boolean }> = ({ menuOpen }) => {
     navigate('/login');
   };
 
-  const handleAboutClick = (event: React.MouseEvent<HTMLAnchorElement>) => {
-    event.preventDefault();
-    if (!isAuthenticated) {
-      setIsModalOpen(true);
-    } else {
-      navigate('/about');
-    }
-  };
-
-  const handleServicesClick = (event: React.MouseEvent<HTMLAnchorElement>) => {
-    event.preventDefault();
-    if (!isAuthenticated) {
-      setIsModalOpen(true);
-    } else {
-      navigate('/services');
-    }
-  };
-
-  const handleOverviewClick = (event: React.MouseEvent<HTMLAnchorElement>) => {
-    event.preventDefault();
-    if (!isAuthenticated) {
-      setIsModalOpen(true);
-    } else {
-      navigate('/dashboard/OverviewBalance');
-    }
-  };
-
   const isAuthPage = location.pathname === '/login' || location.pathname === '/register';
   const isDashboardPage = location.pathname.startsWith('/dashboard');
 

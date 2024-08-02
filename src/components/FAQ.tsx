@@ -1,7 +1,6 @@
 // src/components/FAQ.js
 import React from 'react';
 import styled from 'styled-components';
-import Slider from 'react-slick';
 import FAQItem from './Question';
 
 const FAQSection = styled.section`

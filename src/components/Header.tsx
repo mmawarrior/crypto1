@@ -2,8 +2,8 @@ import React from 'react';
 import styled, { keyframes, css } from 'styled-components';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../components/AuthContext';
-import { FaBars, FaUserCircle, FaTachometerAlt, FaWallet, FaNewspaper, FaCog } from 'react-icons/fa';
-import { SidebarItem, IconWrapper, TextWrapper, SidebarContainer } from './Sidebar';
+import { FaUserCircle, FaTachometerAlt, FaWallet, FaNewspaper, FaCog } from 'react-icons/fa';
+import { SidebarItem, IconWrapper, TextWrapper } from './Sidebar';
 
 interface NavProps {
   open?: boolean;
