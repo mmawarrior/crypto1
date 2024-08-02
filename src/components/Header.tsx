@@ -174,7 +174,7 @@ const Header: React.FC<HeaderProps> = ({ onAboutClick, onServicesClick, onOvervi
           <SidebarItemsContainer>
             <SidebarItem to="#">
               <IconWrapper><FaUserCircle /></IconWrapper>
-              <TextWrapper>Hello, Marquez</TextWrapper>
+              <TextWrapper>Hello!</TextWrapper>
             </SidebarItem>
             <SidebarItem to="/dashboard">
               <IconWrapper><FaTachometerAlt /></IconWrapper>

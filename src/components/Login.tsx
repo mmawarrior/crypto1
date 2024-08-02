@@ -91,8 +91,8 @@ const ButtonContainer = styled.div`
 `;
 
 const Login: React.FC = () => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [email, setEmail] = useState('user@user.nl');
+  const [password, setPassword] = useState('user@user.nl');
   const [error, setError] = useState('');
   const navigate = useNavigate();
   const { login } = useAuth(); // Gebruik de login functie van de context
@@ -148,12 +148,14 @@ const Login: React.FC = () => {
             placeholder="Email Address"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
+            defaultValue="user@user.nl"
           />
           <Input
             type="password"
             placeholder="Password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
+            defaultValue="user@user.nl"
           />
           {error && <p style={{ color: 'red' }}>{error}</p>}
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', margin: '10px 0' }}>
