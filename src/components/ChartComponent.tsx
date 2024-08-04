@@ -106,10 +106,11 @@ const ChartComponent: React.FC<ChartComponentProps> = ({ coinData, width = '95%'
       return;
     }
 
+    const limitedCoinData = coinData.slice(0, 5); // Limiting to 5 coins
     const ctx = chartRef.current?.getContext('2d');
     if (!ctx) return;
 
-    const labels = coinData[0].sparkline_in_7d.price.map((_: number, index: number) =>
+    const labels = limitedCoinData[0].sparkline_in_7d.price.map((_: number, index: number) =>
       new Date(Date.now() - (6 - index) * 24 * 60 * 60 * 1000).toLocaleDateString('en-US', { month: 'short', year: 'numeric' })
     );
 
@@ -117,9 +118,13 @@ const ChartComponent: React.FC<ChartComponentProps> = ({ coinData, width = '95%'
       type: 'line',
       data: {
         labels,
-        datasets: coinData.map((coin: any) => ({
+        datasets: limitedCoinData.map((coin: any) => ({
           label: `${coin.name} Price`,
-          data: coin.sparkline_in_7d.price,
+          data: coin.sparkline_in_7d.price.map((price: number, index: number, array: number[]) => {
+            const startPrice = array[0];
+            const percentageChange = ((price - startPrice) / startPrice) * 100;
+            return { x: labels[index], y: percentageChange, price: price.toFixed(2) };
+          }),
           borderColor: getRandomColor(),
           backgroundColor: getRandomColor(0.2),
           tension: 0.1,
@@ -145,6 +150,12 @@ const ChartComponent: React.FC<ChartComponentProps> = ({ coinData, width = '95%'
           tooltip: {
             mode: 'index',
             intersect: false,
+            callbacks: {
+              label: function (context: any) {
+                const { dataset, raw } = context;
+                return `${dataset.label}: ${raw.y.toFixed(2)}% ($${raw.price})`;
+              },
+            },
           },
         },
         scales: {
@@ -178,7 +189,7 @@ const ChartComponent: React.FC<ChartComponentProps> = ({ coinData, width = '95%'
             display: true,
             title: {
               display: true,
-              text: 'Price (USD)',
+              text: 'Price Change (%)',
               color: '#ffffff',
               font: {
                 size: 16,

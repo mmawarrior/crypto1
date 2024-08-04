@@ -32,7 +32,7 @@ const Overlay = styled.div<{ isOpen: boolean }>`
   left: 0;
   right: 0;
   bottom: 0;
-  background: rgba(0, 0, 0, 0.5);
+  background: rgba(0, 0, 0, 0.7);
   z-index: 1000;
   animation: ${fadeIn} 0.3s ease-in-out;
 `;
@@ -42,6 +42,7 @@ const ModalContent = styled.div`
   background: white;
   color: black;
   width: 300px;
+  max-width: 500px;
   padding: 20px;
   border-radius: 10px;
   top: 50%;
@@ -49,7 +50,18 @@ const ModalContent = styled.div`
   transform: translate(-50%, -50%);
   z-index: 1001;
   text-align: center;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
   animation: ${slideIn} 0.3s ease-in-out;
+
+  @media (max-width: 768px) {
+    width: 70%;
+    padding: 15px;
+  }
+
+  @media (max-width: 480px) {
+    width: 70%;
+    padding: 10px;
+  }
 `;
 
 const CloseButton = styled.button`
@@ -58,8 +70,14 @@ const CloseButton = styled.button`
   right: 10px;
   background: none;
   border: none;
-  font-size: 20px;
+  font-size: 24px;
   cursor: pointer;
+  color: #999;
+  transition: color 0.2s;
+
+  &:hover {
+    color: #333;
+  }
 `;
 
 const Modal: React.FC<ModalProps> = ({ isOpen, onClose, children }) => {
