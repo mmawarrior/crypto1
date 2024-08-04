@@ -13,7 +13,7 @@ import Login from './components/Login';
 import Register from './components/Register';
 import PrivateRoute from './components/PrivateRoute';
 import Modal from './components/Modal';
-import Dashboard from './components/Dashboard'; // Voeg deze import toe
+import Dashboard from './components/Dashboard';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 
@@ -31,36 +31,37 @@ const AppContainer = styled.div`
 `;
 
 const App: React.FC = () => {
-  const [menuOpen, setMenuOpen] = useState(false);
-
-  const toggleMenu = () => {
-    setMenuOpen(prevState => !prevState);
-  };
-
   return (
     <AuthProvider>
       <Router>
         <AppContainer>
           <GlobalStyle />
-          <Header
-            onAboutClick={() => {}}
-            onServicesClick={() => {}}
-            onOverviewClick={() => {}}
-            toggleMenu={toggleMenu}
-            menuOpen={menuOpen}
-          />
-          <Content menuOpen={menuOpen} />
+          <MainContent />
         </AppContainer>
       </Router>
     </AuthProvider>
   );
 };
 
-const Content: React.FC<{ menuOpen: boolean }> = ({ menuOpen }) => {
-  const location = useLocation();
-  const navigate = useNavigate();
-  const { isAuthenticated } = useAuth();
+const MainContent: React.FC = () => {
+  const [menuOpen, setMenuOpen] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const { isAuthenticated } = useAuth(); // Hook usage within the AuthProvider context
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  const toggleMenu = () => {
+    setMenuOpen(prevState => !prevState);
+  };
+
+  const handleProtectedRouteClick = (event: React.MouseEvent<HTMLAnchorElement>, path: string) => {
+    if (!isAuthenticated) {
+      event.preventDefault();
+      setIsModalOpen(true);
+    } else {
+      navigate(path);
+    }
+  };
 
   useEffect(() => {
     if (!isAuthenticated && (location.pathname === '/about' || location.pathname === '/services' || location.pathname === '/dashboard/OverviewBalance')) {
@@ -84,6 +85,13 @@ const Content: React.FC<{ menuOpen: boolean }> = ({ menuOpen }) => {
 
   return (
     <>
+      <Header
+        onAboutClick={(event) => handleProtectedRouteClick(event, '/about')}
+        onServicesClick={(event) => handleProtectedRouteClick(event, '/services')}
+        onOverviewClick={(event) => handleProtectedRouteClick(event, '/dashboard/OverviewBalance')}
+        toggleMenu={toggleMenu}
+        menuOpen={menuOpen}
+      />
       {isDashboardPage && <Sidebar open={menuOpen} />}
       <Routes>
         <Route path="/" element={<MainSection />} />

@@ -231,7 +231,7 @@ const WalletOverview: React.FC = () => {
     coin.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
     coin.symbol.toLowerCase().includes(searchTerm.toLowerCase())
   );
-  const top10Coins = filteredCoins.slice(0, 10);
+  const topCoins = filteredCoins.slice(0, 7); // Limiting to 7 coins
 
   return (
     <WalletOverviewContainer>
@@ -257,7 +257,7 @@ const WalletOverview: React.FC = () => {
           </tr>
         </thead>
         <tbody>
-          {top10Coins.map((coin, index) => (
+          {topCoins.map((coin, index) => (
             <tr key={coin.id}>
               <td data-label="#">{index + 1}</td>
               <td data-label="Coin">{coin.name} ({coin.symbol.toUpperCase()})</td>
@@ -273,7 +273,7 @@ const WalletOverview: React.FC = () => {
           ))}
         </tbody>
       </Table>
-      <ChartComponent coinData={top10Coins} />
+      <ChartComponent coinData={topCoins} />
     </WalletOverviewContainer>
   );
 };

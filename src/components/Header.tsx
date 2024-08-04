@@ -52,16 +52,16 @@ const Nav = styled.nav<NavProps>`
     display: ${props => (props.open ? 'block' : 'none')};
     position: absolute;
     top: 49px;
-    left: 0; /* Veranderd van right: 0 naar left: 0 */
+    left: 0;
     background: #1e3a8a;
     width: 100%;
-    text-align: left; /* Veranderd van center naar left */
+    text-align: left;
     padding: 10px 0;
     z-index: 1000;
 
     a {
       display: block;
-      margin: 10px 20px; /* Veranderd van 10px 0 naar 10px 20px */
+      margin: 10px 20px;
     }
   }
 `;
@@ -78,7 +78,7 @@ const LogoutButton = styled.button`
   }
  @media (max-width: 1200px) {
     display: block;
-    margin: 10px 15px; /* Zorgt ervoor dat de margin consistent is */
+    margin: 10px 15px;
   }
 `;
 
@@ -137,11 +137,11 @@ const SidebarItemsContainer = styled.div`
 const Header: React.FC<HeaderProps> = ({ onAboutClick, onServicesClick, onOverviewClick, toggleMenu, menuOpen }) => {
   const { isAuthenticated, logout } = useAuth();
   const navigate = useNavigate();
-  const location = useLocation(); // Use location to get the current path
+  const location = useLocation();
 
   const handleLogout = () => {
     logout();
-    navigate('/'); // Navigate to home or login page after logout
+    navigate('/');
   };
 
   const handleLinkClick = (onClick: (event: React.MouseEvent<HTMLAnchorElement>) => void) => (event: React.MouseEvent<HTMLAnchorElement>) => {
@@ -149,7 +149,6 @@ const Header: React.FC<HeaderProps> = ({ onAboutClick, onServicesClick, onOvervi
     toggleMenu();
   };
 
-  // Determine if the current path is the dashboard path
   const isDashboardPath = location.pathname.startsWith('/dashboard');
 
   return (
@@ -170,7 +169,7 @@ const Header: React.FC<HeaderProps> = ({ onAboutClick, onServicesClick, onOvervi
         ) : (
           <Link to="/login" onClick={toggleMenu}>Login</Link>
         )}
-        {isDashboardPath && ( // Conditionally render the sidebar items
+        {isDashboardPath && (
           <SidebarItemsContainer>
             <SidebarItem to="#">
               <IconWrapper><FaUserCircle /></IconWrapper>
