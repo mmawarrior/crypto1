@@ -80,8 +80,12 @@ const LogoutButton = styled.button`
     display: block;
     margin: 10px 15px;
   }
-`;
+  @media (max-width: 768px) {
+    font-size: 16px;
+    padding: 0px 6px; /* Adjust padding for smaller screens */
+  }
 
+`;
 const fadeIn = keyframes`
   from {
     opacity: 0;
