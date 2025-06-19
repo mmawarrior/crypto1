@@ -1,9 +1,11 @@
+// Import React, state hook en extra dependencies
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import { Link, useNavigate } from 'react-router-dom';
-import { auth } from './firebase'; // Zorg ervoor dat je de juiste import hebt
-import { useAuth } from '../components/AuthContext'; // Import useAuth
+import { auth } from './firebase'; // Importeer je eigen Firebase config
+import { useAuth } from '../components/AuthContext'; // Auth context voor globale login status
 
+// Styled Components voor de UI
 const LoginContainer = styled.div`
   display: flex;
   height: 100vh;
@@ -13,6 +15,7 @@ const LoginContainer = styled.div`
   justify-content: center;
 `;
 
+// Formulier styling
 const LoginForm = styled.div`
   padding: 40px;
   background-color: rgba(0, 10, 49, 0.9);
@@ -34,6 +37,7 @@ const Description = styled.p`
   color: #b0b3b8;
 `;
 
+// Input styling voor email & wachtwoord
 const Input = styled.input`
   width: 95%;
   padding: 12px;
@@ -48,6 +52,7 @@ const Input = styled.input`
   }
 `;
 
+// Standaard Button
 const Button = styled.button`
   width: 100%;
   padding: 12px;
@@ -64,6 +69,7 @@ const Button = styled.button`
   }
 `;
 
+// Google login button met aparte kleur
 const GoogleButton = styled(Button)`
   background-color: #db4437;
   &:hover {
@@ -71,6 +77,7 @@ const GoogleButton = styled(Button)`
   }
 `;
 
+// Link naar registratiepagina
 const RegisterLink = styled(Link)`
   display: block;
   color: white;
@@ -84,42 +91,52 @@ const RegisterLink = styled(Link)`
   }
 `;
 
+// Container voor buttons (sign in + register)
 const ButtonContainer = styled.div`
   display: flex;
   flex-direction: column;
   gap: 10px;
 `;
 
+// Hoofdcomponent
 const Login: React.FC = () => {
-  const [email, setEmail] = useState('user@user.nl');
-  const [password, setPassword] = useState('user@user.nl');
-  const [error, setError] = useState('');
-  const navigate = useNavigate();
-  const { login } = useAuth(); // Gebruik de login functie van de context
+  // States voor formulierdata
+  const [email, setEmail] = useState('user@user.nl'); // Default voor test gemak
+  const [password, setPassword] = useState('user@user.nl'); // Zelfde default
+  const [error, setError] = useState(''); // Error boodschap
+  const navigate = useNavigate(); // Router navigatie
+  const { login } = useAuth(); // Auth context voor login status
 
+  // Placeholder functie voor Google login
   const handleGoogleLogin = () => {
-    // Logic for Google login
+    // Hier kan je later Google auth logica toevoegen
   };
 
+  // Handler voor gewone email login
   const handleLogin = async (event: React.FormEvent) => {
     event.preventDefault();
     setError('');
 
-    // Email validation
+    // Simpele email validatie
     if (!/\S+@\S+\.\S+/.test(email)) {
       setError('Please enter a valid email address.');
       return;
     }
 
     try {
+      // Firebase login
       await auth.signInWithEmailAndPassword(email, password);
-      // Handle successful login
-      login(); // Update auth context
-      navigate('/dashboard/OverviewBalance'); // Redirect to the overview page
+
+      // Zet de globale login status via context
+      login();
+
+      // Redirect naar dashboard of overview na succesvolle login
+      navigate('/dashboard/OverviewBalance');
     } catch (error) {
+      // Error logging (voor debugging)
       console.error('Error logging in: ', error);
-      // Handle error (e.g., show error message to user)
-  
+
+      // Error afhandeling op basis van Firebase foutcode
       if (error instanceof Error && 'code' in error) {
         const firebaseError = error as { code: string, message: string };
         if (firebaseError.code === 'auth/invalid-credential' || firebaseError.code === 'auth/wrong-password') {
@@ -135,13 +152,16 @@ const Login: React.FC = () => {
     }
   };
 
+  // Render de login pagina
   return (
     <LoginContainer>
       <LoginForm>
         <Title>Welcome Back</Title>
         <Description>Login to your crypto account</Description>
+        {/* Google login knop */}
         <GoogleButton onClick={handleGoogleLogin}>Sign in with Google</GoogleButton>
         <p>OR</p>
+        {/* Login formulier */}
         <form onSubmit={handleLogin}>
           <Input
             type="email"
@@ -157,7 +177,10 @@ const Login: React.FC = () => {
             onChange={(e) => setPassword(e.target.value)}
             defaultValue="user@user.nl"
           />
+          {/* Error boodschap */}
           {error && <p style={{ color: 'red' }}>{error}</p>}
+
+          {/* Optie voor onthouden + wachtwoord vergeten */}
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', margin: '10px 0' }}>
             <div>
               <input type="checkbox" id="rememberMe" />
@@ -165,6 +188,8 @@ const Login: React.FC = () => {
             </div>
             <span style={{ fontSize: '14px', color: '#b0b3b8' }}>Forgot Password?</span>
           </div>
+
+          {/* Inloggen en registreren */}
           <ButtonContainer>
             <Button type="submit">Sign In</Button>
             <RegisterLink to="/register">Register</RegisterLink>
